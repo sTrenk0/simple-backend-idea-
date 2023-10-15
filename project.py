@@ -1,5 +1,14 @@
+import datetime
 import string
 from string import digits, punctuation
+
+
+class MixinDate:
+    def __init__(self):
+        self.data_created = datetime.datetime.now().time().strftime('%H:%M:%S')
+
+    def gettime(self):
+        return self.data_created
 
 
 class Client:
@@ -10,6 +19,7 @@ class Client:
         self.surname  = 'Client surname: ' + surname
         self._number_passport = self.__check_digits(number_passport)
         self._amount = {name_amount: 0}
+        super().__init__()
 
 
 
@@ -36,7 +46,7 @@ class Client:
 
 
 
-class BankAccount(Client):
+class BankAccount(Client,MixinDate):
     def __init__(self,name,surname,number_passport,name_amount):
         super().__init__(name,surname,number_passport,name_amount)
 
@@ -79,18 +89,4 @@ class BankAccount(Client):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-c1 = BankAccount('Artem','Rokhmakov','0983','my_first_account')
-# print(c1.withdraw('my_first_account',20))
-print(c1.get_balance('my_first_account'))
 
